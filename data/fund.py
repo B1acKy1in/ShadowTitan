@@ -5,28 +5,40 @@ def parse_fund_daily(fs:str):
     temp = fs.strip("[").strip("]")
     ts = temp.split(",")
     fund = {}
-    fund["code"] = ts[0]
-    fund["full_name"] = ts[1]
-    fund["sim_name"] = ts[2]
+    fund["code"] = ts[0][1:-1]
+    fund["full_name"] = ts[1][1:-1]
+    fund["sim_name"] = ts[2][1:-1]
 
     dwjz = ts[5][1:-1]
     if len(dwjz) > 0:
-        fund["dwjz"] = float(dwjz)
+        fund["dwjz"] = str(float(dwjz))
     else:
-        fund["dwjz"] = float(0.0)
+        fund["dwjz"] = str(float(0.0))
 
     ljjz = ts[6][1:-1]
     if len(ljjz) > 0:
-        fund["ljjz"] = float(ljjz)
+        fund["ljjz"] = str(float(ljjz))
     else:
-        fund["ljjz"] = float(0.0)
+        fund["ljjz"] = str(float(0.0))
 
-    fund["sgzt"] = ts[9]
-    fund["shzt"] = ts[10]
+    dwzz = ts[7][1:-1]
+    if len(dwzz) > 0:
+        fund["dwzz"] = str(float(dwzz))
+    else:
+        fund["dwzz"] = str(float(0.0))
+
+    ljzz = ts[8][1:-1]
+    if len(ljzz) > 0:
+        fund["ljzz"] = str(float(ljzz))
+    else:
+        fund["ljzz"] = str(float(0.0))
+
+    fund["sgzt"] = ts[9][1:-1]
+    fund["shzt"] = ts[10][1:-1]
 
     return fund
 
-def get_fund_base_info():
+def get_fund_daily():
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }

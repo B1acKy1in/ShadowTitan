@@ -1,0 +1,8 @@
+# python bytecode
+__pycache__/
+
+# test
+test/
+
+# database
+db/
