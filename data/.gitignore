@@ -6,3 +6,6 @@ __pycache__/*
 
 # vscode settings
 .vscode/*
+
+# requiretments
+src/requiretments.txt
