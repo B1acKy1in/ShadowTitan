@@ -1,8 +1,0 @@
-# test dictionary
-test/*
-
-# python bytecode
-__pycache__/*
-
-# vscode settings
-.vscode/*

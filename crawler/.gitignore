@@ -1,8 +1,8 @@
 # python bytecode
-__pycache__/
+__pycache__/*
 
 # test
-test/
+test/*
 
 # database
-db/
+db/*
