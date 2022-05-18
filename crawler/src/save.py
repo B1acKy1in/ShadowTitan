@@ -92,10 +92,24 @@ class DB_Utile():
                 date varchar(13),\
                 dwjz float,\
                 equityReturn float,\
-                unitMoney varchar
+                unitMoney varchar(256)\
                 )
         """
         cursor.execute(sql.format(code = code))
+
+        sql = """
+            INSERT INTO fund_dwjz_{code}\
+                (date, dwjz, equityReturn, unitMoney)\
+                VALUES ({date}, {dwjz}, {equityReturn}, {unitMoney})
+        """
+        for dwjz in fund.dwjz:
+            cursor.execute(sql.format(
+                code = code,
+                date = dwjz.get('x'),
+                dwjz=dwjz.get('y'),
+                equityReturn=dwjz.get('equityReturn'),
+                unitMoney="\'" + dwjz.get('unitMoney').strip("\"") +  "\'"))
+
 
         sql = """
             DROP TABLE IF EXISTS fund_ljjz_{code}
@@ -104,12 +118,18 @@ class DB_Utile():
         sql = """
             CREATE TABLE fund_ljjz_{code}(\
                 date varchar(13),\
-                dwjz float,\
-                equityReturn float,\
-                unitMoney varchar
+                ljjz float\
                 )
         """
         cursor.execute(sql.format(code = code))
+
+        sql = """
+            INSERT INTO fund_ljjz_{code}(date, ljjz)\
+                VALUES ({date}, {ljjz})
+        """
+        for ljjz in fund.ljjz:
+            cursor.execute(sql.format(code=code, date=ljjz[0], ljjz=ljjz[1]))
+
 
         self.conn.commit()
         cursor.close()

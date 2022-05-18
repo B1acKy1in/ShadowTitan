@@ -11,10 +11,10 @@ from save import save_fund_info, save_fund_daily, save_fund_his, get_fund_list
 app = FastAPI()
 app.cache = {'date':float(),'funds':[]}
 
-@app.get('/api/update_fund_his')
-async def update_fund_his(code: str = ""):
+@app.get('/api/update_fund_his/{code}')
+async def update_fund_his(code):
     # do parameter check before use update
-    data = parse_his(code)
+    data = parse_his(str(code))
     save_fund_his(data)
 
 

@@ -2,7 +2,7 @@ import json
 import requests
 
 class FundHis:
-    def __init__(self, code, dwjz, ljjz):
+    def __init__(self, code, ljjz, dwjz):
         self.code = code
         self.dwjz = dwjz
         self.ljjz = ljjz
@@ -15,6 +15,17 @@ def parse_ljjz(data:str):
     else:
         d[1] = float(d[1])
     return d
+
+def parse_dwjz(dwjz:dict):
+    dwjz['x'] = str(dwjz['x'])
+    for key in dwjz:
+        if dwjz[key] == '':
+            if key != 'y' or key != 'equityReturn':
+                dwjz[key] = 'None'
+            else:
+                dwjz[key] =0.0
+
+    return dwjz
 
 def parse_his(code:str):
     r = requests.get("http://fund.eastmoney.com/pingzhongdata/{}.js".format(code))
@@ -45,6 +56,7 @@ def parse_his(code:str):
 
     ljjz = list(map(parse_ljjz, ljjz_str_list))
     dwjz = list(map(lambda x: json.loads(x), dwjz_str_list))
+    dwjz = list(map(parse_dwjz, dwjz))
 
     fund = FundHis(code, ljjz, dwjz)
 

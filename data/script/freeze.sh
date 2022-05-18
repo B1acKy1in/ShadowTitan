@@ -2,4 +2,4 @@
 
 cd ../src
 workon data
-pip freeze > requestments.txt
+pip freeze > requirements.txt
