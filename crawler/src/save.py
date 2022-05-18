@@ -80,12 +80,13 @@ class DB_Utile():
 
     def save_fund_his(self, fund:FundHis):
         print('save')
+        code = fund.code
         cursor = self.conn.cursor()
 
         sql = """
             DROP TABLE IF EXISTS fund_dwjz_{code}
         """
-        cursor.execute(sql.format(fund.code))
+        cursor.execute(sql.format(code = code))
         sql = """
             CREATE TABLE fund_dwjz_{code}(\
                 date varchar(13),\
@@ -94,12 +95,12 @@ class DB_Utile():
                 unitMoney varchar
                 )
         """
-        cursor.execute(sql.format(fund.code))
+        cursor.execute(sql.format(code = code))
 
         sql = """
             DROP TABLE IF EXISTS fund_ljjz_{code}
         """
-        cursor.execute(sql.format(fund.code))
+        cursor.execute(sql.format(code = code))
         sql = """
             CREATE TABLE fund_ljjz_{code}(\
                 date varchar(13),\
@@ -108,7 +109,7 @@ class DB_Utile():
                 unitMoney varchar
                 )
         """
-        cursor.execute(sql.format(fund.code))
+        cursor.execute(sql.format(code = code))
 
         self.conn.commit()
         cursor.close()
