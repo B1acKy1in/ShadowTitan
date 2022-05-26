@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM titan/python-env:1.0
 
 RUN cd / && mkdir app
 ADD src /app
@@ -6,11 +6,6 @@ ADD static/requirements.txt /
 ADD script/entrypoint.sh /
 
 RUN chmod +x entrypoint.sh \
-    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
-    && apk update && apk add --no-cache bash build-base coreutils \
-    && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
-    && python -m pip install --upgrade pip \
-    && pip install -U setuptools pip \
-    && pip install -r requirements.txt && pip install uvicorn[standard]
+    && pip install -r requirements.txt
 
 ENTRYPOINT [ "/entrypoint.sh" ]
